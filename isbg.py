@@ -443,6 +443,9 @@ if opts["--learnspambox"] is not None:
     s_learnt = 0
     typ, uids = imap.uid("SEARCH", None, "ALL")
     uids = uids[0].split()
+    if len(uids) == 0:
+        typ, uids = imap.uid("SEARCH", None, "TO", "@")
+        uids = uids[0].split()
     for u in uids:
         body = getmessage(u)
         p = Popen(["spamc", "--learntype=spam"],
@@ -478,6 +481,9 @@ if opts["--learnhambox"] is not None:
     h_learnt = 0
     typ, uids = imap.uid("SEARCH", None, "ALL")
     uids = uids[0].split()
+    if len(uids) == 0:
+        typ, uids = imap.uid("SEARCH", None, "TO", "@")
+        uids = uids[0].split()
     for u in uids:
         body = getmessage(u)
         p = Popen(["spamc", "--learntype=ham"],
